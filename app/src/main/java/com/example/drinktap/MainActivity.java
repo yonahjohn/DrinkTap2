@@ -127,10 +127,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Double bac = caculateBac();
         // Set the text of the BAC label to the actual BAC.
         DecimalFormat format = new DecimalFormat("###.#####");
+        //Sets the progress bar
         newProgress(bac);
+        //Creates toasts for symptoms
+        symptoms(bac);
+
         bacText.setText(format.format(bac));
 
 
+    }
+
+    private void symptoms(Double bac) {
+        if( bac >= 0.001 && bac <= 0.029){
+            Toast.makeText(this, "You may start to experience very subtle effects",
+                    Toast.LENGTH_LONG).show();
+        } else if(bac >= 0.03 && bac <= 0.059){
+            Toast.makeText(this, "Watch out! You may be extra talkative!",
+                    Toast.LENGTH_LONG).show();
+
+        } else if(bac >= 0.06 && bac <= 0.099){
+            Toast.makeText(this, "Your reflexes may be slowed, do NOT drive!",
+                    Toast.LENGTH_LONG).show();
+
+        } else if(bac >= 0.100 && bac <= 0.199){
+            Toast.makeText(this, "You may feel nausea and have a slurred speech",
+                    Toast.LENGTH_LONG).show();
+
+        } else if(bac >= 0.200 && bac <= 0.299){
+            Toast.makeText(this, "You may start to experience severe motor impairment and memory blackouts! Be careful!",
+                    Toast.LENGTH_LONG).show();
+
+        } else if(bac >= 0.300 && bac <= 0.399){
+            Toast.makeText(this, "WARNING - your heart rate may get affected!",
+                    Toast.LENGTH_LONG).show();
+
+        } else if(bac >= 0.4){
+            Toast.makeText(this, "WARNING - STOP DRINKING! PLEASE VISIT THE EMERGENCY ROOM",
+                    Toast.LENGTH_LONG).show();
+
+        }
     }
 
     private void newProgress(Double bac) {
@@ -174,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // For each drink
         for (Drink drink: list) {
-            // Get the difference between the time the drink was drunk and the current time.
+            // Gets the difference between the time the drink was drunk and the current time.
             long diff = date.getTime() - drink.getDate().getTime();
 
             Double A = drink.getVolume() * drink.getContent()/100;
@@ -186,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 0.015/60 = 0.00025 average elimination rate in a minute.
             Double full = partial - 0.00025 * TimeUnit.MILLISECONDS.toMinutes(diff);
 
-            // If the BAC is less then zero, it means that that drink's effects are gone.
+            // If the BAC is less then zero, it means that the drink's effects are gone.
             if (full > 0){
                 // Otherwise, add the BAC to the bac variable.
                 bac += full;

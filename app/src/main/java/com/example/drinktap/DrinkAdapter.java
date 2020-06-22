@@ -1,5 +1,6 @@
 package com.example.drinktap;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Class that the manages the data contained in the a table.
+ * Class that the manages the data contained in the table.
  */
 class DrinkAdapter extends RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder> {
     // The list of the drink to be shown in the table.
     private ArrayList<Drink> mDrinks;
 
-    // Provide a reference to the views for each data item
+    // Provides a reference to the views for each data item
     public static class DrinkViewHolder extends RecyclerView.ViewHolder {
         public TextView descriptionText;
         public TextView volumeText;
@@ -50,14 +51,15 @@ class DrinkAdapter extends RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder> {
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(DrinkViewHolder holder, int position) {
-        // - get element from your dataset at this position
+        // - get element from the dataset at this position
         // - replace the contents of the view with that element
         holder.descriptionText.setText(mDrinks.get(position).getDescription());
         holder.volumeText.setText("Volume: "+mDrinks.get(position).getVolume().toString()+" oz");
         holder.contentText.setText("Content: "+mDrinks.get(position).getContent().toString()+" %");
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         holder.dateText.setText("Date: "+dt.format(mDrinks.get(position).getDate()));
     }
 
